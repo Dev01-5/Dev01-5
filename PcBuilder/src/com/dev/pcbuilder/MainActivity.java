@@ -1,4 +1,6 @@
-package com.example.pcbuilder;
+package com.dev.pcbuilder;
+
+import com.dev.pcbuilder.R;
 
 import android.app.Activity;
 import android.os.Bundle;
