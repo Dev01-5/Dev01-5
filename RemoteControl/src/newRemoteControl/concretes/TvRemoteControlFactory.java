@@ -15,6 +15,8 @@ public class TvRemoteControlFactory extends aRemoteControlFactory{
 		remoteControl.setWindowPosition(500, 250);
 		remoteControl.setWindowBackground(Color.ORANGE);
 		
+		remoteControl.setRemoteWindow();
+		
 		return remoteControl;
 	}
 }

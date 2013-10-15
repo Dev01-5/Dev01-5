@@ -15,6 +15,8 @@ public class RadioRemoteControlFactory extends aRemoteControlFactory{
 		remoteControl.setWindowPosition(800, 250);
 		remoteControl.setWindowBackground(Color.GREEN);
 		
+		remoteControl.setRemoteWindow();
+		
 		return remoteControl;
 	}
 }

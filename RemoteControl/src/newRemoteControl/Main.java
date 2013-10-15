@@ -55,14 +55,8 @@ public class Main {
 	public static JFrame buildRemote(iRemoteControlFactory factory) { 
 		iRemoteControl remote = factory.createRemoteControl();
 		
-		JFrame frame = new JFrame(remote.getWindowTitle());
-		frame.setLocation(remote.getWindowPositionX(), remote.getWindowPositionY());
-		frame.setSize(remote.getWindowSizeX(), remote.getWindowSizeY());
-		frame.getContentPane().setBackground(remote.getWindowBackground());
-		
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setVisible(true);	
-		
+		JFrame frame = remote.getRemoteWindow();
+
 		frame.addWindowListener(windowListener());
 		
 		return frame;

@@ -1,8 +1,12 @@
 package newRemoteControl.concretes;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 
-import newRemoteControl.interfaces.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import newRemoteControl.interfaces.iRemoteControl;
 
 public class RemoteControl implements iRemoteControl{
 
@@ -10,17 +14,17 @@ public class RemoteControl implements iRemoteControl{
 	private int windowPositionX, windowPositionY;
 	private int windowSizeX, windowSizeY;
 	private Color windowBackground;
+	private JFrame remote;
+	private JButton[] buttons;
 	
 	@Override
 	public void PowerDeviceOn() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void PowerDeviceOff() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
@@ -73,6 +77,35 @@ public class RemoteControl implements iRemoteControl{
 	@Override
 	public Color getWindowBackground() {
 		return windowBackground;
+	}
+
+	@Override
+	public void setRemoteWindow() {
+		this.remote = new JFrame(this.windowTitle);
+		
+		this.remote.setLocation(this.windowPositionX, this.windowPositionY);
+		this.remote.setSize(this.windowSizeX, this.windowSizeY);
+		this.remote.getContentPane().setBackground(this.windowBackground);
+		
+		this.remote.setLayout(new GridLayout(4,4));
+		this.remote.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.remote.setVisible(true);		
+	}
+
+	@Override
+	public JFrame getRemoteWindow() {
+		return this.remote;
+	}
+
+	@Override
+	public void addButton(JButton button) {
+		this.remote.add(button);
+	}
+
+	@Override
+	public JButton[] getButtons() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

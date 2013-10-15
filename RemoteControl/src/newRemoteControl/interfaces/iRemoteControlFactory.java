@@ -4,6 +4,6 @@ import newRemoteControl.concretes.RemoteControl;
 
 public interface iRemoteControlFactory {
 	
-	public RemoteControl createRemoteControl();
+	public iRemoteControl createRemoteControl();
 	
 }

@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class Main {
+	private static boolean state = false;
+	
 	public static void main(String[] args) {
 		JFrame f = new JFrame("REMOTE TEST");
 		f.setSize(400, 150);
@@ -29,6 +31,10 @@ public class Main {
 				SimpleRemoteControl remote = new SimpleRemoteControl();
 				Light light = new Light();
 				LightOnCommand lightOn = new LightOnCommand(light);
+				
+				if (!state)
+					state = true;
+				
 				remote.setCommand(lightOn);
 				remote.buttonWasPressed();
 			}

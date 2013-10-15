@@ -1,9 +1,12 @@
 package newRemoteControl.abstracts;
 
-import newRemoteControl.concretes.RemoteControl;
+import newRemoteControl.interfaces.iRemoteControl;
+import newRemoteControl.concretes.*;
 import newRemoteControl.interfaces.iRemoteControlFactory;
 
 public abstract class aRemoteControlFactory implements iRemoteControlFactory{
 	
-	public abstract RemoteControl createRemoteControl(); 	
+	protected RemoteControl remoteControl;
+	
+	public abstract iRemoteControl createRemoteControl(); 	
 }
