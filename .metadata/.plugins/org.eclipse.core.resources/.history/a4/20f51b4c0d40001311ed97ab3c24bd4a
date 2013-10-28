@@ -1,0 +1,23 @@
+package newRemoteControl.concretes.Lamp;
+
+import java.awt.Color;
+
+import newRemoteControl.abstracts.ARemoteControl;
+import newRemoteControl.abstracts.aRemoteControlFactory;
+
+public class TvRemoteControlFactory extends aRemoteControlFactory{
+
+	@Override
+	public ARemoteControl createRemoteControl() {
+//		ARemoteControl remoteControl = new ARemoteControl();
+//		
+//		remoteControl.setWindowTitle("Tv Remote");
+//		remoteControl.setWindowSize(300, 300);
+//		remoteControl.setWindowPosition(500, 250);
+//		remoteControl.setWindowBackground(Color.ORANGE);
+//		
+//		remoteControl.setRemoteWindow();
+//		
+		return remoteControl;
+	}
+}

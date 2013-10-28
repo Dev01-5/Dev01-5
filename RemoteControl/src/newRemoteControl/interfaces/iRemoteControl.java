@@ -4,12 +4,12 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTextArea;
 
 public interface iRemoteControl {
 
-	void PowerDeviceOn();
-	void PowerDeviceOff();
 	void addButton(JButton button);
+	void addTextArea(JTextArea field);
 	
 	void setWindowTitle(String value);
 	void setWindowSize(int x, int y);

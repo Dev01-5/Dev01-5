@@ -1,0 +1,104 @@
+package newRemoteControl.concretes.Tv;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+
+import newRemoteControl.Command.Radio.Power;
+import newRemoteControl.Command.Radio.PowerOffCommand;
+import newRemoteControl.Command.Radio.PowerOnCommand;
+import newRemoteControl.abstracts.ATvRemoteControlFactory;
+import newRemoteControl.abstracts.ARemoteControl;
+import newRemoteControl.interfaces.ITv;
+
+public class TvRemoteControlFactory extends ATvRemoteControlFactory{
+
+	private JButton TvPlusOne, TvMinOne, TvOn, TvOff;
+	private JTextArea alertDeviceStatus, alertChannelStatus;
+	
+	@Override
+	public ARemoteControl createRemoteControl() {
+		ITv iTv = new TvTypeOne();
+		
+		remoteControl = new TvRemoteControl(iTv);
+		
+		remoteControl.setWindowTitle("Tv Remote");
+		remoteControl.setWindowSize(400, 200);
+		remoteControl.setWindowPosition(800, 250);
+		remoteControl.setWindowBackground(Color.GREEN);
+		
+		remoteControl.setRemoteWindow();
+		
+		alertDeviceStatus = new JTextArea(15, remoteControl.getWindowSizeX());
+		alertDeviceStatus.setEditable(false);
+		
+		alertChannelStatus = new JTextArea(15, remoteControl.getWindowSizeX());
+		alertChannelStatus.setEditable(false);
+		
+		TvPlusOne = new JButton("+");
+		TvMinOne = new JButton("-");
+		TvOn = new JButton("Aan");
+		TvOff = new JButton("Uit");
+		
+		remoteControl.addTextArea(alertDeviceStatus);
+		remoteControl.addTextArea(alertChannelStatus);
+		
+		remoteControl.addButton(TvPlusOne);
+		remoteControl.addButton(TvMinOne);
+		remoteControl.addButton(TvOn);
+		remoteControl.addButton(TvOff);
+		
+		TvPlusOne.addActionListener(buttonListener());
+		TvMinOne.addActionListener(buttonListener());
+		TvOn.addActionListener(buttonListener());
+		TvOff.addActionListener(buttonListener());
+		
+		return remoteControl;
+	}
+	
+public ActionListener buttonListener() {
+		
+		return new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource().equals(TvPlusOne)) {
+					remoteControl.setChannelByButton("+");
+					
+					alertChannelStatus.setText(remoteControl.getState());
+				}
+				
+				if (e.getSource().equals(TvMinOne)) {
+					remoteControl.setChannelByButton("-");
+					
+					alertChannelStatus.setText(remoteControl.getState());
+				}
+				
+				if (e.getSource().equals(TvOn)) {
+					Power power = new Power();
+					PowerOnCommand powerOn = new PowerOnCommand(power);
+					((TvRemoteControl) remoteControl).setCommandPowerOn(powerOn);
+					((TvRemoteControl) remoteControl).powerOnWasPressed();
+					
+					alertDeviceStatus.setText(power.getState());
+					
+					remoteControl.setPowerOn();
+				}
+				
+				if (e.getSource().equals(TvOff)) {
+					Power power = new Power();
+					PowerOffCommand powerOff = new PowerOffCommand(power);
+					((TvRemoteControl) remoteControl).setCommandPowerOff(powerOff);
+					((TvRemoteControl) remoteControl).powerOffWasPressed();
+					
+					alertDeviceStatus.setText(power.getState());
+					
+					remoteControl.setPowerOff();
+				}
+			}
+		};
+	}
+}

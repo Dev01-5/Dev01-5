@@ -1,0 +1,17 @@
+package newRemoteControl.Command.Radio;
+
+import newRemoteControl.interfaces.Command;
+
+public class LightOneOffCommand implements Command {
+
+	Power light;
+
+	public LightOneOffCommand(Power light) {
+		this.light = light;
+	}
+
+	public void execute() {
+		light.off();
+	}
+
+}

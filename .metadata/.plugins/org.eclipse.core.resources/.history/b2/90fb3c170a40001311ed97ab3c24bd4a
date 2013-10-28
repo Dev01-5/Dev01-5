@@ -1,0 +1,17 @@
+package newRemoteControl.Command.Radio;
+
+import newRemoteControl.interfaces.Command;
+
+public class PowerOnCommand implements Command {
+
+	Power light;
+
+	public PowerOnCommand(Power light) {
+		this.light = light;
+	}
+
+	public void execute() {
+		light.on();
+	}
+
+}

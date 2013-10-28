@@ -1,0 +1,18 @@
+package newRemoteControl.Command.Radio;
+
+public class Power {
+
+	String state;
+	
+	public void on(){
+		state = "Radio staat aan!!";
+	}
+	
+	public void off(){
+		state = "Radio staat uit!!";
+	}
+	
+	public String getState() {
+		return state;
+	}
+}

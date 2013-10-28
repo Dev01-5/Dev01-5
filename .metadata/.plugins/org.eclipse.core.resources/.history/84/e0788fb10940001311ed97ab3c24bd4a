@@ -1,0 +1,18 @@
+package newRemoteControl.Command.Radio;
+
+public class LightOne {
+
+	String state;
+	
+	public void on(){
+		state = "Lamp 1 staat aan!!";
+	}
+	
+	public void off(){
+		state = "Lamp 1 staat uit!!";
+	}
+	
+	public String getState() {
+		return state;
+	}
+}

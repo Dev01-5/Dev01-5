@@ -1,0 +1,92 @@
+package newRemoteControl.concretes;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+
+import newRemoteControl.Command.Radio.Power;
+import newRemoteControl.Command.Radio.PowerOnCommand;
+import newRemoteControl.abstracts.ARadioRemoteControlFactory;
+import newRemoteControl.abstracts.ARemoteControl;
+import newRemoteControl.interfaces.IRadio;
+
+public class RadioRemoteControlFactory extends ARadioRemoteControlFactory{
+
+	private JButton RadioPlusOne, RadioMinOne, RadioOn, RadioOff;
+	private JTextArea alertDeviceStatus, alertChannelStatus;
+	
+	@Override
+	public ARemoteControl createRemoteControl() {
+		IRadio iRadio = new RadioTypeOne();
+		
+		remoteControl = new RadioRemoteControl(iRadio);
+		
+		remoteControl.setWindowTitle("Radio Remote");
+		remoteControl.setWindowSize(400, 200);
+		remoteControl.setWindowPosition(800, 250);
+		remoteControl.setWindowBackground(Color.GREEN);
+		
+		remoteControl.setRemoteWindow();
+		
+		alertDeviceStatus = new JTextArea(15, remoteControl.getWindowSizeX());
+		alertDeviceStatus.setEditable(false);
+		
+		alertChannelStatus = new JTextArea(15, remoteControl.getWindowSizeX());
+		alertChannelStatus.setEditable(false);
+		
+		RadioPlusOne = new JButton("+");
+		RadioMinOne = new JButton("-");
+		RadioOn = new JButton("Aan");
+		RadioOff = new JButton("Uit");
+		
+		remoteControl.addTextArea(alertDeviceStatus);
+		remoteControl.addTextArea(alertChannelStatus);
+		
+		remoteControl.addButton(RadioPlusOne);
+		remoteControl.addButton(RadioMinOne);
+		remoteControl.addButton(RadioOn);
+		remoteControl.addButton(RadioOff);
+		
+		RadioPlusOne.addActionListener(buttonListener());
+		RadioMinOne.addActionListener(buttonListener());
+		RadioOn.addActionListener(buttonListener());
+		RadioOff.addActionListener(buttonListener());
+		
+		return remoteControl;
+	}
+	
+public ActionListener buttonListener() {
+		
+		return new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource().equals(RadioPlusOne)) {
+					remoteControl.setChannelByButton("+");
+					
+					alertChannelStatus.setText(remoteControl.getState());
+				}
+				
+				if (e.getSource().equals(RadioMinOne)) {
+					remoteControl.setChannelByButton("-");
+					
+					alertChannelStatus.setText(remoteControl.getState());
+				}
+				
+				if (e.getSource().equals(RadioOn)) {
+					Power power = new Power();
+					PowerOnCommand powerOn = new PowerOnCommand(power);
+					((LampRemoteControl) remoteControl).setCommandTwoOn(lightOn);
+					((LampRemoteControl) remoteControl).lampTwoOnWasPressed();
+				}
+				
+				if (e.getSource().equals(RadioOff)) {
+
+				}
+			}
+		};
+	}
+}

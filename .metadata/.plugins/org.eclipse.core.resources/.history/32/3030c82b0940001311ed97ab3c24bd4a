@@ -1,0 +1,40 @@
+package newRemoteControl.concretes;
+
+import newRemoteControl.interfaces.IRadio;
+
+public class RadioTypeOne implements IRadio {
+
+	private String statePower;
+	private String state;
+	private int channel = 0;
+	private boolean power;
+	
+	@Override
+	public void On() {
+		statePower = "Radio staat aan";
+	}
+
+	@Override
+	public void Off() {
+		statePower = "Radio staat uit";
+	}
+
+	@Override
+	public void changeChannel(String type) {
+		
+			if (type.equals("+"))
+				this.channel++;
+			else{
+				if (channel != 0)
+					this.channel--;
+			}
+				
+		state = "Radio Type One is on channel: " + this.channel;
+	}
+
+	@Override
+	public String getState() {
+		return state;
+	}
+
+}

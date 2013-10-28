@@ -1,0 +1,9 @@
+package newRemoteControl.abstracts;
+
+import newRemoteControl.concretes.Radio.RadioRemoteControl;
+
+
+public abstract class ATvRemoteControlFactory extends aRemoteControlFactory{
+
+	protected RadioRemoteControl remoteControl;
+}

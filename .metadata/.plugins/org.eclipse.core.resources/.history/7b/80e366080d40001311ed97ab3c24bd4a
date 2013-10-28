@@ -1,0 +1,43 @@
+package newRemoteControl.concretes;
+
+import newRemoteControl.abstracts.ARadioRemoteControl;
+import newRemoteControl.interfaces.Command;
+import newRemoteControl.interfaces.IRadio;
+
+public class RadioRemoteControl extends ARadioRemoteControl{
+
+	Command slot;
+	Command slot2;
+	
+	public RadioRemoteControl(IRadio iRadio) {
+		super(iRadio);
+	}
+
+	public void setChannelByButton(String type) {
+		setChannel(type);
+	}
+	
+	public void setPowerOn(){
+		On();
+	}
+	
+	public void setPowerOff(){
+		Off();
+	}
+	
+	public void setCommandPowerOn(Command command) {
+		slot = command;
+	}
+
+	public void powerOnWasPressed() {
+		slot.execute();
+	}
+	
+	public void setCommandPowerOff(Command command) {
+		slot2 = command;
+	}
+
+	public void powerOffWasPressed() {
+		slot2.execute();
+	}	
+}

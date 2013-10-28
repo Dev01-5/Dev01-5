@@ -1,0 +1,32 @@
+package newRemoteControl.concretes;
+
+import newRemoteControl.abstracts.ARadioRemoteControl;
+import newRemoteControl.interfaces.Command;
+import newRemoteControl.interfaces.IRadio;
+
+public class RadioRemoteControl extends ARadioRemoteControl{
+
+	public RadioRemoteControl(IRadio iRadio) {
+		super(iRadio);
+	}
+
+	public void setChannelByButton(String type) {
+		setChannel(type);
+	}
+	
+	public void setCommandOneOn(Command command) {
+		slot = command;
+	}
+
+	public void lampOneOnWasPressed() {
+		slot.execute();
+	}
+	
+	public void setCommandOneOff(Command command) {
+		slot2 = command;
+	}
+
+	public void lampOneOffWasPressed() {
+		slot2.execute();
+	}
+}

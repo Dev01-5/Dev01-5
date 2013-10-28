@@ -1,0 +1,49 @@
+package newRemoteControl.concretes.Tv;
+
+import newRemoteControl.interfaces.IRadio;
+
+public class TvTypeOne implements ITv {
+
+	private String statePower;
+	private String state;
+	private int channel = 0;
+	private boolean power = false;
+	
+	@Override
+	public void On() {
+		statePower = "Radio staat aan";
+		power = true;
+	}
+
+	@Override
+	public void Off() {
+		statePower = "Radio staat uit";
+		power = false;
+	}
+
+	@Override
+	public void changeChannel(String type) {
+		if (power){
+			if (type.equals("+"))
+				this.channel++;
+			else{
+				if (channel != 0)
+					this.channel--;
+			}
+		}
+			
+				
+		state = "Radio Type One is on channel: " + this.channel;
+	}
+
+	@Override
+	public String getState() {
+		return state;
+	}
+	
+	@Override
+	public String getStatePower(){
+		return statePower;
+	}
+
+}

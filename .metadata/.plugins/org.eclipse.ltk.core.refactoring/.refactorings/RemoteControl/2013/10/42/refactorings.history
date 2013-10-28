@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;AllOnState.java&apos; to &apos;RemoteControl/src/newRemoteControl.States.Lamp&apos;&#x0D;&#x0A;- Original project: &apos;RemoteControl&apos;&#x0D;&#x0A;- Destination element: &apos;RemoteControl/src/newRemoteControl.States.Lamp&apos;&#x0D;&#x0A;- Original element: &apos;newRemoteControl.States.Lamp.AllOnState.java&apos;" description="Copy compilation unit" destination="/src&lt;newRemoteControl.States.Lamp" element1="/src&lt;newRemoteControl.States.Lamp{AllOnState.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1381822122793" units="1" version="1.0"/>
+</session>

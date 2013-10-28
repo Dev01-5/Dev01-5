@@ -1,0 +1,6 @@
+package newRemoteControl.abstracts;
+
+public abstract class ATvRemoteControlFactory extends aRemoteControlFactory{
+
+	protected TvRemoteControl remoteControl;
+}

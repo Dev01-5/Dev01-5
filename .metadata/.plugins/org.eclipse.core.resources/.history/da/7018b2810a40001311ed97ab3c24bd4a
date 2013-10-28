@@ -1,0 +1,15 @@
+package newRemoteControl.concretes;
+
+import newRemoteControl.abstracts.ARadioRemoteControl;
+import newRemoteControl.interfaces.IRadio;
+
+public class RadioRemoteControl extends ARadioRemoteControl{
+
+	public RadioRemoteControl(IRadio iRadio) {
+		super(iRadio);
+	}
+
+	public void setChannelByButton(String type) {
+		setChannel(type);
+	}
+}
