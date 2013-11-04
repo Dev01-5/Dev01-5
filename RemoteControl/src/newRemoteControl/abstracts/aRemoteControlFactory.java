@@ -9,4 +9,8 @@ public abstract class aRemoteControlFactory implements iRemoteControlFactory{
 	
 	public abstract iRemoteControl createRemoteControl(); 	
 
+	public ARemoteControl getRemoteControl() {
+		return remoteControl;
+	}
+	
 } 

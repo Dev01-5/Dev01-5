@@ -10,6 +10,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import newRemoteControl.Controllers.RadioRemoteControlListeners;
 import newRemoteControl.concretes.Tv.TvRemoteControlFactory;
 import newRemoteControl.concretes.Lamp.LampRemoteControlFactory;
 import newRemoteControl.concretes.Radio.RadioRemoteControlFactory;
@@ -74,6 +75,7 @@ public class Main {
 				
 				if ((e.getSource() == btnRadioRemote  && (radioWindow.equals(RemoteState.CLOSED)))) {
 					radioRemoteWindow = buildRemote(new RadioRemoteControlFactory());
+
 					radioWindow = RemoteState.SHOW;
 				}
 				

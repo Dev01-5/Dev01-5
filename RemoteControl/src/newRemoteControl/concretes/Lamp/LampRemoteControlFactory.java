@@ -13,18 +13,23 @@ import newRemoteControl.Command.Lamp.LightOneOnCommand;
 import newRemoteControl.Command.Lamp.LightTwo;
 import newRemoteControl.Command.Lamp.LightTwoOffCommand;
 import newRemoteControl.Command.Lamp.LightTwoOnCommand;
+import newRemoteControl.Controllers.LampRemoteControlListeners;
 import newRemoteControl.abstracts.ARemoteControl;
 import newRemoteControl.abstracts.aRemoteControlFactory;
+import newRemoteControl.concretes.Radio.RadioRemoteControl;
 
 public class LampRemoteControlFactory extends aRemoteControlFactory{
 
 	private JButton LightOneOnButton, LightTwoOnButton, LightOneOffButton, LightTwoOffButton;
 	private JTextArea alertBox;
 	
+	private LampRemoteControl lampRemoteControl;
+	
 	@Override
 	public ARemoteControl createRemoteControl() {
 		
 		remoteControl = new LampRemoteControl();
+		lampRemoteControl = ((LampRemoteControl) remoteControl);
 		
 		remoteControl.setWindowTitle("Lamp Remote");
 		remoteControl.setWindowSize(400, 200);
@@ -47,56 +52,28 @@ public class LampRemoteControlFactory extends aRemoteControlFactory{
 		remoteControl.addButton(LightTwoOnButton);
 		remoteControl.addButton(LightTwoOffButton);
 		
-		LightOneOnButton.addActionListener(buttonListener());
-		LightOneOffButton.addActionListener(buttonListener());
-		LightTwoOnButton.addActionListener(buttonListener());
-		LightTwoOffButton.addActionListener(buttonListener());
+		new LampRemoteControlListeners(this);
 		
 		return remoteControl;
 	}
 	
-	public ActionListener buttonListener() {
-		
-		return new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource().equals(LightOneOnButton)) {
-					LightOne light = new LightOne();
-					LightOneOnCommand lightOn = new LightOneOnCommand(light);
-					((LampRemoteControl) remoteControl).setCommandOneOn(lightOn);
-					((LampRemoteControl) remoteControl).lampOneOnWasPressed();
-					
-					alertBox.setText(light.getState());
-				}
-				
-				if (e.getSource().equals(LightOneOffButton)) {
-					LightOne light = new LightOne();
-					LightOneOffCommand lightOff = new LightOneOffCommand(light);
-					((LampRemoteControl) remoteControl).setCommandOneOff(lightOff);
-					((LampRemoteControl) remoteControl).lampOneOffWasPressed();
-					
-					alertBox.setText(light.getState());
-				}
-				
-				if (e.getSource().equals(LightTwoOnButton)) {
-					LightTwo light = new LightTwo();
-					LightTwoOnCommand lightOn = new LightTwoOnCommand(light);
-					((LampRemoteControl) remoteControl).setCommandTwoOn(lightOn);
-					((LampRemoteControl) remoteControl).lampTwoOnWasPressed();
-					
-					alertBox.setText(light.getState());
-				}
-				
-				if (e.getSource().equals(LightTwoOffButton)) {
-					LightTwo light = new LightTwo();
-					LightTwoOffCommand lightOff = new LightTwoOffCommand(light);
-					((LampRemoteControl) remoteControl).setCommandTwoOff(lightOff);
-					((LampRemoteControl) remoteControl).lampTwoOffWasPressed();
-					
-					alertBox.setText(light.getState());
-				}
-			}
-		};
+	public JTextArea getAlert() {
+		return alertBox;
+	}
+
+	public JButton getLightOneOnButton() {
+		return LightOneOnButton;
+	}
+	
+	public JButton getLightOneOffButton() {
+		return LightOneOffButton;
+	}
+	
+	public JButton getLightTwoOnButton() {
+		return LightTwoOnButton;
+	}
+	
+	public JButton getLightTwoOffButton() {
+		return LightTwoOffButton;
 	}
 }

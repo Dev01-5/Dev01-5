@@ -1,20 +1,16 @@
 package newRemoteControl.concretes.Radio;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
-import newRemoteControl.Command.Radio.Power;
-import newRemoteControl.Command.Radio.PowerOffCommand;
-import newRemoteControl.Command.Radio.PowerOnCommand;
-import newRemoteControl.abstracts.ARadioRemoteControlFactory;
+import newRemoteControl.Controllers.RadioRemoteControlListeners;
 import newRemoteControl.abstracts.ARemoteControl;
+import newRemoteControl.abstracts.aRemoteControlFactory;
 import newRemoteControl.interfaces.IRadio;
 
-public class RadioRemoteControlFactory extends ARadioRemoteControlFactory{
+public class RadioRemoteControlFactory extends aRemoteControlFactory{
 
 	private JButton RadioPlusOne, RadioMinOne, RadioOn, RadioOff;
 	private JTextArea alertDeviceStatus, alertChannelStatus;
@@ -24,6 +20,7 @@ public class RadioRemoteControlFactory extends ARadioRemoteControlFactory{
 		IRadio iRadio = new RadioTypeOne();
 		
 		remoteControl = new RadioRemoteControl(iRadio);
+		remoteControl = ((RadioRemoteControl) remoteControl);
 		
 		remoteControl.setWindowTitle("Radio Remote");
 		remoteControl.setWindowSize(400, 200);
@@ -51,54 +48,32 @@ public class RadioRemoteControlFactory extends ARadioRemoteControlFactory{
 		remoteControl.addButton(RadioOn);
 		remoteControl.addButton(RadioOff);
 		
-		RadioPlusOne.addActionListener(buttonListener());
-		RadioMinOne.addActionListener(buttonListener());
-		RadioOn.addActionListener(buttonListener());
-		RadioOff.addActionListener(buttonListener());
+		new RadioRemoteControlListeners(this);
 		
 		return remoteControl;
 	}
 	
-public ActionListener buttonListener() {
-		
-		return new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource().equals(RadioPlusOne)) {
-					remoteControl.setChannelByButton("+");
-					
-					alertChannelStatus.setText(remoteControl.getState());
-				}
-				
-				if (e.getSource().equals(RadioMinOne)) {
-					remoteControl.setChannelByButton("-");
-					
-					alertChannelStatus.setText(remoteControl.getState());
-				}
-				
-				if (e.getSource().equals(RadioOn)) {
-					Power power = new Power();
-					PowerOnCommand powerOn = new PowerOnCommand(power);
-					((RadioRemoteControl) remoteControl).setCommandPowerOn(powerOn);
-					((RadioRemoteControl) remoteControl).powerOnWasPressed();
-					
-					alertDeviceStatus.setText(power.getState());
-					
-					remoteControl.setPowerOn();
-				}
-				
-				if (e.getSource().equals(RadioOff)) {
-					Power power = new Power();
-					PowerOffCommand powerOff = new PowerOffCommand(power);
-					((RadioRemoteControl) remoteControl).setCommandPowerOff(powerOff);
-					((RadioRemoteControl) remoteControl).powerOffWasPressed();
-					
-					alertDeviceStatus.setText(power.getState());
-					
-					remoteControl.setPowerOff();
-				}
-			}
-		};
+	public JTextArea getAlertDeviceStatus() {
+		return alertDeviceStatus;
+	}
+	
+	public JTextArea getAlertChannelStatus() {
+		return alertChannelStatus;
+	}
+	
+	public JButton getRadioPlusOne() {
+		return RadioPlusOne;
+	}
+	
+	public JButton getRadioMinOne() {
+		return RadioMinOne;
+	}
+	
+	public JButton getRadioOn() {
+		return RadioOn;
+	}
+	
+	public JButton getRadioOff() {
+		return RadioOff;
 	}
 }
