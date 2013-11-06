@@ -10,12 +10,11 @@ import java.awt.event.WindowListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import newRemoteControl.Controllers.RadioRemoteControlListeners;
-import newRemoteControl.concretes.Tv.TvRemoteControlFactory;
 import newRemoteControl.concretes.Lamp.LampRemoteControlFactory;
 import newRemoteControl.concretes.Radio.RadioRemoteControlFactory;
-import newRemoteControl.interfaces.iRemoteControl;
+import newRemoteControl.concretes.Tv.TvRemoteControlFactory;
 import newRemoteControl.interfaces.iRemoteControlFactory;
+import newRemoteControl.View.FrameView;
 
 public class Main {
 
@@ -54,13 +53,11 @@ public class Main {
 	}
 	
 	public static JFrame buildRemote(iRemoteControlFactory factory) { 
-		iRemoteControl remote = factory.createRemoteControl();
-		
-		JFrame frame = remote.getRemoteWindow();
+		FrameView remote = factory.createRemoteControl();
 
-		frame.addWindowListener(windowListener());
+		remote.addWindowListener(windowListener());
 		
-		return frame;
+		return remote;
 	}
 	
 	public static ActionListener buttonListener() {

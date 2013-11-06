@@ -1,21 +1,24 @@
 package newRemoteControl.abstracts;
 
 import java.awt.Color;
-import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+import newRemoteControl.View.FrameView;
+import newRemoteControl.View.FrameView.Position;
+import newRemoteControl.View.FrameView.Size;
 import newRemoteControl.interfaces.iRemoteControl;
 
 public abstract class ARemoteControl implements iRemoteControl{
 
-	private String windowTitle;
-	private int windowPositionX, windowPositionY;
-	private int windowSizeX, windowSizeY;
+	private String windowTitle = "RemoteControl";
 	private Color windowBackground;
 	private JFrame remote;
+	
+	private Position windowPosition;
+	private Size windowSize;
 	
 	@Override
 	public void setWindowTitle(String value) {
@@ -23,15 +26,13 @@ public abstract class ARemoteControl implements iRemoteControl{
 	}
 
 	@Override
-	public void setWindowSize(int x, int y) {
-		this.windowSizeX = x;
-		this.windowSizeY = y;
+	public void setWindowSize(Size value) {
+		this.windowSize = value;
 	}
 
 	@Override
-	public void setWindowPosition(int x, int y) {
-		this.windowPositionX = x;
-		this.windowPositionY = y;
+	public void setWindowPosition(Position value) {
+		this.windowPosition = value;
 	}
 
 	@Override
@@ -45,23 +46,13 @@ public abstract class ARemoteControl implements iRemoteControl{
 	}
 
 	@Override
-	public int getWindowSizeX() {
-		return windowSizeX;
+	public Size getWindowSize() {
+		return windowSize;
 	}
-
+	
 	@Override
-	public int getWindowSizeY() {
-		return windowSizeY;
-	}
-
-	@Override
-	public int getWindowPositionX() {
-		return windowPositionX;
-	}
-
-	@Override
-	public int getWindowPositionY() {
-		return windowPositionY;
+	public Position getWindowPosition() {
+		return windowPosition;
 	}
 
 	@Override
@@ -73,13 +64,13 @@ public abstract class ARemoteControl implements iRemoteControl{
 	public void setRemoteWindow() {
 		this.remote = new JFrame(this.windowTitle);
 		
-		this.remote.setLocation(this.windowPositionX, this.windowPositionY);
-		this.remote.setSize(this.windowSizeX, this.windowSizeY);
-		this.remote.getContentPane().setBackground(this.windowBackground);
-		
-		this.remote.setLayout(new GridLayout(6, 1));
-		this.remote.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.remote.setVisible(true);		
+//		this.remote.setLocation(this.windowPositionX, this.windowPositionY);
+//		this.remote.setSize(this.windowSizeX, this.windowSizeY);
+//		this.remote.getContentPane().setBackground(this.windowBackground);
+//		
+//		this.remote.setLayout(new GridLayout(6, 1));
+//		this.remote.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//		this.remote.setVisible(true);		
 	}
 
 	@Override
@@ -88,8 +79,8 @@ public abstract class ARemoteControl implements iRemoteControl{
 	}
 
 	@Override
-	public void addButton(JButton button) {
-		this.remote.add(button);
+	public void addButton(FrameView view, JButton button) {
+		view.add(button);
 	}
 
 	@Override
@@ -99,7 +90,7 @@ public abstract class ARemoteControl implements iRemoteControl{
 	}
 
 	@Override
-	public void addTextArea(JTextArea field) {
-		this.remote.add(field);
+	public void addTextArea(FrameView view, JTextArea field) {
+		view.add(field);
 	}
 }

@@ -14,28 +14,29 @@ import newRemoteControl.Command.Lamp.LightTwoOffCommand;
 import newRemoteControl.Command.Lamp.LightTwoOnCommand;
 import newRemoteControl.concretes.Lamp.LampRemoteControl;
 import newRemoteControl.concretes.Lamp.LampRemoteControlFactory;
-import newRemoteControl.concretes.Tv.TvRemoteControlFactory;
+import newRemoteControl.View.FrameView;
 
 public class LampRemoteControlListeners {
 
 	private ActionListener listener;
-	private LampRemoteControlFactory view;
+	private FrameView view; 
+	private LampRemoteControlFactory model;
 	private LampRemoteControl remoteControl;
 	
 	private JButton LightOneOffButton, LightOneOnButton, LightTwoOffButton, LightTwoOnButton;
 	private JTextArea alertBox;
 	
-	public LampRemoteControlListeners(LampRemoteControlFactory view) {
+	public LampRemoteControlListeners(FrameView view, LampRemoteControlFactory model) {
 		this.view = view;
 		
-		remoteControl = (LampRemoteControl) view.getRemoteControl();
+		remoteControl = (LampRemoteControl) model.getRemoteControl();
 		
-		LightOneOffButton = view.getLightOneOffButton();
-		LightOneOnButton = view.getLightOneOnButton();
-		LightTwoOffButton = view.getLightTwoOffButton();
-		LightTwoOnButton = view.getLightTwoOnButton();
+		LightOneOnButton = view.getLampOneOn();
+		LightOneOffButton = view.getLampOneOff();
+		LightTwoOnButton = view.getLampTwoOn();
+		LightTwoOffButton = view.getLampTwoOff();
 		
-		alertBox = view.getAlert();
+		alertBox = view.getAlertDeviceStatus();
 			
 		buttonListener();
 		

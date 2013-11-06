@@ -3,10 +3,11 @@ package newRemoteControl.concretes.Radio;
 import java.awt.Color;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import newRemoteControl.Controllers.RadioRemoteControlListeners;
-import newRemoteControl.abstracts.ARemoteControl;
+import newRemoteControl.View.FrameView;
 import newRemoteControl.abstracts.aRemoteControlFactory;
 import newRemoteControl.interfaces.IRadio;
 
@@ -16,41 +17,30 @@ public class RadioRemoteControlFactory extends aRemoteControlFactory{
 	private JTextArea alertDeviceStatus, alertChannelStatus;
 	
 	@Override
-	public ARemoteControl createRemoteControl() {
+	public FrameView createRemoteControl() {
 		IRadio iRadio = new RadioTypeOne();
 		
 		remoteControl = new RadioRemoteControl(iRadio);
 		remoteControl = ((RadioRemoteControl) remoteControl);
 		
-		remoteControl.setWindowTitle("Radio Remote");
-		remoteControl.setWindowSize(400, 200);
-		remoteControl.setWindowPosition(800, 250);
+		remoteControl.setWindowSize(FrameView.Size.SMALL);
+		remoteControl.setWindowPosition(FrameView.Position.RIGHTBOTTOM);
 		remoteControl.setWindowBackground(Color.GREEN);
 		
-		remoteControl.setRemoteWindow();
+		FrameView frameView = new FrameView(remoteControl);
 		
-		alertDeviceStatus = new JTextArea(15, remoteControl.getWindowSizeX());
-		alertDeviceStatus.setEditable(false);
+		frameView.addButton(FrameView.Buttons.POWERON);
+		frameView.addButton(FrameView.Buttons.POWEROFF);
+		frameView.addButton(FrameView.Buttons.SETCHANNEL);
 		
-		alertChannelStatus = new JTextArea(15, remoteControl.getWindowSizeX());
-		alertChannelStatus.setEditable(false);
+		frameView.addTextField(FrameView.TextFields.DEVICEPOWERALERT);
+		frameView.addTextField(FrameView.TextFields.CHANGECHANNELALERT);
 		
-		RadioPlusOne = new JButton("+");
-		RadioMinOne = new JButton("-");
-		RadioOn = new JButton("Aan");
-		RadioOff = new JButton("Uit");
+		frameView.buildView();
 		
-		remoteControl.addTextArea(alertDeviceStatus);
-		remoteControl.addTextArea(alertChannelStatus);
+		new RadioRemoteControlListeners(frameView, this, iRadio);
 		
-		remoteControl.addButton(RadioPlusOne);
-		remoteControl.addButton(RadioMinOne);
-		remoteControl.addButton(RadioOn);
-		remoteControl.addButton(RadioOff);
-		
-		new RadioRemoteControlListeners(this);
-		
-		return remoteControl;
+		return frameView;
 	}
 	
 	public JTextArea getAlertDeviceStatus() {

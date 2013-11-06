@@ -2,16 +2,16 @@ package newRemoteControl.Command.Radio;
 
 import newRemoteControl.interfaces.Command;
 
-public class PowerOnCommand implements Command {
+public class PowerTvOffCommand implements Command {
 
-	Power power;
+	PowerTv power;
 
-	public PowerOnCommand(Power power) {
+	public PowerTvOffCommand(PowerTv power) {
 		this.power = power;
 	}
 
 	public void execute() {
-		power.on();
+		power.off();
 	}
 
 }

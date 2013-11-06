@@ -1,13 +1,13 @@
 package newRemoteControl.abstracts;
 
-import newRemoteControl.interfaces.iRemoteControl;
 import newRemoteControl.interfaces.iRemoteControlFactory;
+import newRemoteControl.View.FrameView;
 
 public abstract class aRemoteControlFactory implements iRemoteControlFactory{
 	
 	protected ARemoteControl remoteControl;
 	
-	public abstract iRemoteControl createRemoteControl(); 	
+	public abstract FrameView createRemoteControl(); 	
 
 	public ARemoteControl getRemoteControl() {
 		return remoteControl;

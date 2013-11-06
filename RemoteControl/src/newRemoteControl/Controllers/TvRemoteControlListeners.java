@@ -6,30 +6,36 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
-import newRemoteControl.Command.Radio.Power;
-import newRemoteControl.Command.Radio.PowerOffCommand;
-import newRemoteControl.Command.Radio.PowerOnCommand;
+import newRemoteControl.Command.Radio.PowerTv;
+import newRemoteControl.Command.Radio.PowerTvOffCommand;
+import newRemoteControl.Command.Radio.PowerTvOnCommand;
+import newRemoteControl.View.FrameView;
+import newRemoteControl.concretes.Radio.RadioRemoteControlFactory;
 import newRemoteControl.concretes.Tv.TvRemoteControl;
 import newRemoteControl.concretes.Tv.TvRemoteControlFactory;
+import newRemoteControl.interfaces.*;
 
 public class TvRemoteControlListeners {
 
 	private ActionListener listener;
-	private TvRemoteControlFactory view;
+	private FrameView view;
+	private TvRemoteControlFactory model;
 	private TvRemoteControl remoteControl;
+	private ITv iTv;
 	
 	private JButton TvOn, TvOff, TvMinOne, TvPlusOne;
 	private JTextArea alertChannelStatus, alertDeviceStatus;
 	
-	public TvRemoteControlListeners(TvRemoteControlFactory view) {
+	public TvRemoteControlListeners(FrameView view, TvRemoteControlFactory model, ITv iTv){
 		this.view = view;
+		this.iTv = iTv;
 		
-		remoteControl = (TvRemoteControl) view.getRemoteControl();
+		remoteControl = (TvRemoteControl) model.getRemoteControl();
 		
-		TvOn = view.getTvOn();
-		TvOff = view.getTvOff();
-		TvPlusOne = view.getTvPlusOne();
-		TvMinOne = view.getTvMinOne();
+		TvOn = view.getPowerOn();
+		TvOff = view.getPowerOff();
+		TvPlusOne = view.getChannelPlusOne();
+		TvMinOne = view.getChannelMinOne();
 		
 		alertChannelStatus = view.getAlertChannelStatus();
 		alertDeviceStatus = view.getAlertDeviceStatus();
@@ -60,25 +66,21 @@ public class TvRemoteControlListeners {
 				}
 				
 				if (e.getSource().equals(TvOn)) {
-					Power power = new Power();
-					PowerOnCommand powerOn = new PowerOnCommand(power);
+					PowerTv power = new PowerTv(iTv);
+					PowerTvOnCommand powerOn = new PowerTvOnCommand(power);
 					remoteControl.setCommandPowerOn(powerOn);
 					remoteControl.powerOnWasPressed();
 					
 					alertDeviceStatus.setText(power.getState());
-					
-					remoteControl.setPowerOn();
 				}
 				
 				if (e.getSource().equals(TvOff)) {
-					Power power = new Power();
-					PowerOffCommand powerOff = new PowerOffCommand(power);
+					PowerTv power = new PowerTv(iTv);
+					PowerTvOffCommand powerOff = new PowerTvOffCommand(power);
 					remoteControl.setCommandPowerOff(powerOff);
 					remoteControl.powerOffWasPressed();
 					
 					alertDeviceStatus.setText(power.getState());
-					
-					remoteControl.setPowerOff();
 				}
 			}
 		};

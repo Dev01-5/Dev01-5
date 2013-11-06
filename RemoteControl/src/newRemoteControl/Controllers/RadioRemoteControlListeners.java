@@ -6,29 +6,34 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
-import newRemoteControl.Command.Radio.Power;
-import newRemoteControl.Command.Radio.PowerOffCommand;
-import newRemoteControl.Command.Radio.PowerOnCommand;
+import newRemoteControl.View.FrameView;
 import newRemoteControl.concretes.Radio.RadioRemoteControl;
 import newRemoteControl.concretes.Radio.RadioRemoteControlFactory;
+import newRemoteControl.interfaces.IRadio;
+import newRemoteControl.Command.Radio.*;
 
 public class RadioRemoteControlListeners {
 
 	private ActionListener listener;
-	private RadioRemoteControlFactory view;
+	private FrameView view;
+	private RadioRemoteControlFactory model;
+	private IRadio iRadio;
+	
 	private RadioRemoteControl remoteControl;
 	
 	private JButton RadioOn, RadioOff, RadioMinOne, RadioPlusOne;
 	private JTextArea alertChannelStatus, alertDeviceStatus;
 	
-	public RadioRemoteControlListeners(RadioRemoteControlFactory view) {
+	public RadioRemoteControlListeners(FrameView view, RadioRemoteControlFactory model, IRadio iRadio) {
 		this.view = view;
+		this.iRadio = iRadio;
 		
-		remoteControl = (RadioRemoteControl) view.getRemoteControl();
-		RadioOn = view.getRadioOn();
-		RadioOff = view.getRadioOff();
-		RadioPlusOne = view.getRadioPlusOne();
-		RadioMinOne = view.getRadioMinOne();
+		remoteControl = (RadioRemoteControl) model.getRemoteControl();
+		
+		RadioOn = view.getPowerOn();
+		RadioOff = view.getPowerOff();
+		RadioPlusOne = view.getChannelPlusOne();
+		RadioMinOne = view.getChannelMinOne();
 		
 		alertChannelStatus = view.getAlertChannelStatus();
 		alertDeviceStatus = view.getAlertDeviceStatus();
@@ -60,25 +65,21 @@ public class RadioRemoteControlListeners {
 				}
 				
 				if (e.getSource().equals(RadioOn)) {
-					Power power = new Power();
-					PowerOnCommand powerOn = new PowerOnCommand(power);
+					PowerRadio power = new PowerRadio(iRadio);
+					PowerRadioOnCommand powerOn = new PowerRadioOnCommand(power);
 					remoteControl.setCommandPowerOn(powerOn);
 					remoteControl.powerOnWasPressed();
 					
 					alertDeviceStatus.setText(power.getState());
-					
-					remoteControl.setPowerOn();
 				}
 				
 				if (e.getSource().equals(RadioOff)) {
-					Power power = new Power();
-					PowerOffCommand powerOff = new PowerOffCommand(power);
+					PowerRadio power = new PowerRadio(iRadio);
+					PowerRadioOffCommand powerOff = new PowerRadioOffCommand(power);
 					remoteControl.setCommandPowerOff(powerOff);
 					remoteControl.powerOffWasPressed();
 					
 					alertDeviceStatus.setText(power.getState());
-					
-					remoteControl.setPowerOff();
 				}
 			}
 		};

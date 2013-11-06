@@ -1,22 +1,14 @@
 package newRemoteControl.concretes.Lamp;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
-import newRemoteControl.Command.Lamp.LightOne;
-import newRemoteControl.Command.Lamp.LightOneOffCommand;
-import newRemoteControl.Command.Lamp.LightOneOnCommand;
-import newRemoteControl.Command.Lamp.LightTwo;
-import newRemoteControl.Command.Lamp.LightTwoOffCommand;
-import newRemoteControl.Command.Lamp.LightTwoOnCommand;
 import newRemoteControl.Controllers.LampRemoteControlListeners;
-import newRemoteControl.abstracts.ARemoteControl;
+import newRemoteControl.Controllers.TvRemoteControlListeners;
 import newRemoteControl.abstracts.aRemoteControlFactory;
-import newRemoteControl.concretes.Radio.RadioRemoteControl;
+import newRemoteControl.View.*;
 
 public class LampRemoteControlFactory extends aRemoteControlFactory{
 
@@ -26,35 +18,29 @@ public class LampRemoteControlFactory extends aRemoteControlFactory{
 	private LampRemoteControl lampRemoteControl;
 	
 	@Override
-	public ARemoteControl createRemoteControl() {
+	public FrameView createRemoteControl() {
 		
 		remoteControl = new LampRemoteControl();
 		lampRemoteControl = ((LampRemoteControl) remoteControl);
 		
-		remoteControl.setWindowTitle("Lamp Remote");
-		remoteControl.setWindowSize(400, 200);
-		remoteControl.setWindowPosition(100, 250);
-		remoteControl.setWindowBackground(Color.BLACK);
-
-		remoteControl.setRemoteWindow();
-
-		alertBox = new JTextArea(15, remoteControl.getWindowSizeX());
-		alertBox.setEditable(false);
+		remoteControl.setWindowSize(FrameView.Size.LARGE);
+		remoteControl.setWindowPosition(FrameView.Position.LEFTBOTTOM);
+		remoteControl.setWindowBackground(Color.YELLOW);
 		
-		LightOneOnButton = new JButton("Lamp 1 aan");
-		LightOneOffButton = new JButton("Lamp 1 uit");
-		LightTwoOnButton = new JButton("Lamp 2 aan");
-		LightTwoOffButton = new JButton("Lamp 2 uit");
+		FrameView frameView = new FrameView(remoteControl);
 		
-		remoteControl.addTextArea(alertBox);
-		remoteControl.addButton(LightOneOnButton);
-		remoteControl.addButton(LightOneOffButton);
-		remoteControl.addButton(LightTwoOnButton);
-		remoteControl.addButton(LightTwoOffButton);
+		frameView.addButton(FrameView.Buttons.LAMPONEON);
+		frameView.addButton(FrameView.Buttons.LAMPONEOFF);
+		frameView.addButton(FrameView.Buttons.LAMPTWOON);
+		frameView.addButton(FrameView.Buttons.LAMPTWOOFF);
 		
-		new LampRemoteControlListeners(this);
+		frameView.addTextField(FrameView.TextFields.DEVICEPOWERALERT);
 		
-		return remoteControl;
+		frameView.buildView();
+		
+		new LampRemoteControlListeners(frameView, this);
+		
+		return frameView;
 	}
 	
 	public JTextArea getAlert() {

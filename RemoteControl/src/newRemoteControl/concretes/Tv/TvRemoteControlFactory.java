@@ -5,10 +5,12 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
+import newRemoteControl.Controllers.RadioRemoteControlListeners;
 import newRemoteControl.Controllers.TvRemoteControlListeners;
 import newRemoteControl.abstracts.ARemoteControl;
 import newRemoteControl.abstracts.aRemoteControlFactory;
 import newRemoteControl.interfaces.ITv;
+import newRemoteControl.View.*;
 
 public class TvRemoteControlFactory extends aRemoteControlFactory{
 
@@ -16,41 +18,30 @@ public class TvRemoteControlFactory extends aRemoteControlFactory{
 	private JTextArea alertDeviceStatus, alertChannelStatus;
 	
 	@Override
-	public ARemoteControl createRemoteControl() {
+	public FrameView createRemoteControl() {
 		ITv iTv = new TvTypeOne();
 		
 		remoteControl = new TvRemoteControl(iTv);
 		remoteControl = ((TvRemoteControl) remoteControl);
 		
-		remoteControl.setWindowTitle("Tv Remote");
-		remoteControl.setWindowSize(400, 200);
-		remoteControl.setWindowPosition(800, 250);
-		remoteControl.setWindowBackground(Color.GREEN);
-		
-		remoteControl.setRemoteWindow();
-		
-		alertDeviceStatus = new JTextArea(15, remoteControl.getWindowSizeX());
-		alertDeviceStatus.setEditable(false);
-		
-		alertChannelStatus = new JTextArea(15, remoteControl.getWindowSizeX());
-		alertChannelStatus.setEditable(false);
-		
-		TvPlusOne = new JButton("+");
-		TvMinOne = new JButton("-");
-		TvOn = new JButton("Aan");
-		TvOff = new JButton("Uit");
-		
-		remoteControl.addTextArea(alertDeviceStatus);
-		remoteControl.addTextArea(alertChannelStatus);
-		
-		remoteControl.addButton(TvPlusOne);
-		remoteControl.addButton(TvMinOne);
-		remoteControl.addButton(TvOn);
-		remoteControl.addButton(TvOff);
+		remoteControl.setWindowSize(FrameView.Size.MEDIUM);
+		remoteControl.setWindowPosition(FrameView.Position.RIGHTTOP);
+		remoteControl.setWindowBackground(Color.BLACK);
 
-		new TvRemoteControlListeners(this);
-
-		return remoteControl;
+		FrameView frameView = new FrameView(remoteControl);
+		
+		frameView.addButton(FrameView.Buttons.POWERON);
+		frameView.addButton(FrameView.Buttons.POWEROFF);
+		frameView.addButton(FrameView.Buttons.SETCHANNEL);
+		
+		frameView.addTextField(FrameView.TextFields.DEVICEPOWERALERT);
+		frameView.addTextField(FrameView.TextFields.CHANGECHANNELALERT);
+		
+		frameView.buildView();
+		
+		new TvRemoteControlListeners(frameView, this, iTv);
+		
+		return frameView;
 	}
 	
 	public JTextArea getAlertDeviceStatus() {
